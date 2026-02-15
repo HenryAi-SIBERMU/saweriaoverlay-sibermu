@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Setup Preview (Hanya untuk tampilan di sini, tidak perlu dicopy ke OBS) */
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        /* --- COPY CSS DI BAWAH INI KE SAWERIA --- */
+
+        .alert {
+            position: relative;
+            /* Background image template */
+            background-image: url('../desaincard/Alert Saweria (2).png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            /* Adjust dimensions to match the image aspect ratio if possible,
+               otherwise 'contain' handles it but might leave gaps.
+               Assuming a standard card size, e.g., 600px wide. */
+            width: 850px;
+            height: 300px;
+            /* Adjust this height based on the actual image aspect ratio */
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            /* Modified padding to prevent overlap with the person on the right */
+            padding: 20px;
+            padding-right: 240px;
+            /* Push content away from the right side */
+            box-sizing: border-box;
+
+            text-align: center;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 2em;
+            /* Increase font size as requested */
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            text-size-adjust: 100%;
+            text-rendering: optimizelegibility;
+            color: #ffffff;
+
+            border-radius: 10px;
+            /* Match the border radius of the overlay */
+        }
+
+        /* Animated Border (Stroke Box) */
+        .alert:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            /* Gradient SiberMu Blue & Gold */
+            background: linear-gradient(120deg, #003366, #00aaff, #ffd700);
+            background-size: 300% 300%;
+            pointer-events: none;
+            /* Let clicks pass through */
+            z-index: 1;
+            /* Overlay on top of background image */
+
+            clip-path: polygon(0% 100%,
+                    10px 100%,
+                    10px 10px,
+                    calc(100% - 10px) 10px,
+                    calc(100% - 10px) calc(100% - 10px),
+                    10px calc(100% - 10px),
+                    10px 100%,
+                    100% 100%,
+                    100% 0%,
+                    0% 0%);
+        }
+
+        .alert.in:after {
+            animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation 4s ease-in-out infinite;
+        }
+
+        /* motion */
+        @keyframes gradient-animation {
+            0% {
+                background-position: 15% 0%;
+            }
+
+            50% {
+                background-position: 85% 100%;
+            }
+
+            100% {
+                background-position: 15% 0%;
+            }
+        }
+
+        @keyframes frame-enter {
+            0% {
+                clip-path: polygon(0% 100%, 10px 100%, 10px 10px, calc(100% - 10px) 10px, calc(100% - 10px) calc(100% - 10px), 10px calc(100% - 10px), 10px 100%, 100% 100%, 100% 0%, 0% 0%);
+            }
+
+            25% {
+                clip-path: polygon(0% 100%, 10px 100%, 10px 10px, calc(100% - 10px) 10px, calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) 100%, 100% 100%, 100% 0%, 0% 0%);
+            }
+
+            50% {
+                clip-path: polygon(0% 100%, 10px 100%, 10px 10px, calc(100% - 10px) 10px, calc(100% - 10px) 10px, calc(100% - 10px) 10px, calc(100% - 10px) 10px, calc(100% - 10px) 10px, 100% 0%, 0% 0%);
+            }
+
+            75% {
+                -webkit-clip-path: polygon(0% 100%, 10px 100%, 10px 10px, 10px 10px, 10px 10px, 10px 10px, 10px 10px, 10px 10px, 10px 0%, 0% 0%);
+            }
+
+            100% {
+                -webkit-clip-path: polygon(0% 100%, 10px 100%, 10px 100%, 10px 100%, 10px 100%, 10px 100%, 10px 100%, 10px 100%, 10px 100%, 0% 100%);
+            }
+        }
+
+        .message {
+            font-weight: bolder;
+            margin-top: 10px;
+            /* Optional: Add text shadow for better readability on varied backgrounds */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 10;
+            /* Ensure text is above the pseudo-element border if there's overlap */
+            position: relative;
+        }
+
+        .template {
+            /* Optional: Add text shadow for better readability on varied backgrounds */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            margin: 0;
+            z-index: 10;
+            position: relative;
+        }
+
+        .donatur,
+        .amount {
+            color: #ff8b75;
+            /* Warna Peach SiberMu untuk highlight nama/angka */
+            font-weight: bold;
+        }
+
+        /* Entrance Animation */
+        .alert.in {
+            animation: bounceIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale3d(.3, .3, .3);
+            }
+
+            20% {
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+
+            40% {
+                transform: scale3d(.9, .9, .9);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+
+            80% {
+                transform: scale3d(.97, .97, .97);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        /* Wiggle Animation (Optional, can be removed if strictly static is preferred) */
+        .alert:hover {
+            animation: wiggle 0.5s ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(2deg);
+            }
+
+            50% {
+                transform: rotate(-2deg);
+            }
+
+            75% {
+                transform: rotate(1deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HTML Structure Sesuai Base Code -->
+    <div class="alert in">
+        <p class="template">
+            <span class="donatur">Mahasiswa Baru</span> mendukung Pa Dhika sejumlah
+            <span class="amount">Rp 50.000</span>
+        </p>
+        <p class="message">Semangat terus acaranya Pak!</p>
+    </div>
+
+</body>
+
+</html>
