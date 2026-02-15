@@ -18,48 +18,33 @@
 
         /* --- COPY CSS DI BAWAH INI KE SAWERIA --- */
 
-        .alert {
+        .alert-wrapper {
             position: relative;
-            /* Background image template */
+            /* Background image template applied here */
             background-image: url('../desaincard/Alert Saweria (2).png');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
 
-            /* Adjust dimensions to match the image aspect ratio if possible,
-               otherwise 'contain' handles it but might leave gaps.
-               Assuming a standard card size, e.g., 600px wide. */
+            /* Adjust dimensions to match the image aspect ratio */
             width: 850px;
-            height: 300px;
-            /* Adjust this height based on the actual image aspect ratio */
-
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            /* Modified padding to prevent overlap with the person on the right */
-            padding: 20px;
-            padding-right: 240px;
-            /* Push content away from the right side */
-            box-sizing: border-box;
-
-            text-align: center;
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 2em;
-            /* Increase font size as requested */
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            text-size-adjust: 100%;
-            text-rendering: optimizelegibility;
-            color: #ffffff;
+            min-height: 300px;
+            height: auto;
 
             border-radius: 10px;
-            /* Match the border radius of the overlay */
+            box-sizing: border-box;
+
+            display: flex;
+            justify-content: flex-start;
+            /* Align content to the left */
+            align-items: center;
+            padding: 20px;
+            padding-right: 240px;
+            /* Space for the image person */
         }
 
-        /* Animated Border (Stroke Box) */
-        .alert:after {
+        /* Animated Border (Stroke Box) on the wrapper */
+        .alert-wrapper:after {
             content: "";
             position: absolute;
             top: 0;
@@ -67,14 +52,10 @@
             right: 0;
             bottom: 0;
             border-radius: 10px;
-            /* Gradient SiberMu Blue & Gold */
             background: linear-gradient(120deg, #003366, #00aaff, #ffd700);
             background-size: 300% 300%;
             pointer-events: none;
-            /* Let clicks pass through */
             z-index: 1;
-            /* Overlay on top of background image */
-
             clip-path: polygon(0% 100%,
                     10px 100%,
                     10px 10px,
@@ -87,11 +68,63 @@
                     0% 0%);
         }
 
-        .alert.in:after {
+        /* Activate animation when the 'in' class or 'slide-in' class is present */
+        .slide-in:after,
+        .alert-box.in:after {
             animation: frame-enter 1s forwards ease-in-out reverse, gradient-animation 4s ease-in-out infinite;
         }
 
-        /* motion */
+        .alert-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #ffffff;
+            font-family: "IBM Plex Mono", monospace;
+            z-index: 10;
+        }
+
+        .alert-text {
+            /* Styling for the text container */
+            font-size: 2em;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .donator,
+        .wishlist,
+        .message {
+            margin: 0;
+        }
+
+        .donator span,
+        .amount,
+        .wishlist-item {
+            color: #ff8b75;
+            font-weight: bold;
+        }
+
+        .media-wrapper {
+            /* Wrapper for the GIF/Image */
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .media {
+            max-width: 200px;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+            /* Ensure it's not inline */
+        }
+
+        /* Animations */
         @keyframes gradient-animation {
             0% {
                 background-position: 15% 0%;
@@ -128,33 +161,8 @@
             }
         }
 
-        .message {
-            font-weight: bolder;
-            margin-top: 10px;
-            /* Optional: Add text shadow for better readability on varied backgrounds */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-            z-index: 10;
-            /* Ensure text is above the pseudo-element border if there's overlap */
-            position: relative;
-        }
-
-        .template {
-            /* Optional: Add text shadow for better readability on varied backgrounds */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-            margin: 0;
-            z-index: 10;
-            position: relative;
-        }
-
-        .donatur,
-        .amount {
-            color: #ff8b75;
-            /* Warna Peach SiberMu untuk highlight nama/angka */
-            font-weight: bold;
-        }
-
-        /* Entrance Animation */
-        .alert.in {
+        /* Entrance Animation for the box */
+        .slide-in {
             animation: bounceIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
         }
 
@@ -186,45 +194,27 @@
                 transform: scale3d(1, 1, 1);
             }
         }
-
-        /* Wiggle Animation (Optional, can be removed if strictly static is preferred) */
-        .alert:hover {
-            animation: wiggle 0.5s ease-in-out;
-        }
-
-        @keyframes wiggle {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            25% {
-                transform: rotate(2deg);
-            }
-
-            50% {
-                transform: rotate(-2deg);
-            }
-
-            75% {
-                transform: rotate(1deg);
-            }
-
-            100% {
-                transform: rotate(0deg);
-            }
-        }
     </style>
 </head>
 
 <body>
 
-    <!-- HTML Structure Sesuai Base Code -->
-    <div class="alert in">
-        <p class="template">
-            <span class="donatur">Mahasiswa Baru</span> mendukung Pa Dhika sejumlah
-            <span class="amount">Rp 50.000</span>
-        </p>
-        <p class="message">Semangat terus acaranya Pak!</p>
+    <!-- HTML Structure based on User Documentation -->
+    <div class="alert-wrapper">
+        <div class="alert-box slide-in">
+            <div class="alert-text">
+                <p class="donator"><span class="donatur">Mahasiswa</span> donated <span class="amount">Rp
+                        100.000</span>!</p>
+                <!-- Wishlist example (optional) -->
+                <!-- <p class="wishlist">🎁 For wishlist: <span class="wishlist-item">Gaming Mouse</span></p> -->
+                <br>
+                <p class="message">Semangat terus acaranya Pak!</p>
+            </div>
+            <div class="media-wrapper">
+                <!-- Placeholder GIF -->
+                <img src="https://media.giphy.com/media/3R9LDINpbGX2o/giphy.gif" alt="media" class="media">
+            </div>
+        </div>
     </div>
 
 </body>
